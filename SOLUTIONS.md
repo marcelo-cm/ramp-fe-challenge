@@ -18,3 +18,7 @@ We handle a case where the new value has the same `ID` as our `EMPTY_EMPLOYEE` â
 # Bug 4: Clicking on View More button not showing correct data
 
 The response object of the hook returns the new data appended to the existing data, instead of just the new data. During this I also uncovered a bug where users are able to continue viewing more despite there not being another page of data. In this case, viewing more should not be an option.
+
+# Bug 5: Employees filter not available during loading more data
+
+Use the `loading` property of `employeeUtils` to denote the loading state of that particular dropdown.
