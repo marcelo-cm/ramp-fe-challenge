@@ -56,7 +56,6 @@ export function App() {
       <main className="MainContainer">
         <Instructions />
         <hr className="RampBreak--l" />
-
         <InputSelect<Employee>
           isLoading={employeeUtils.loading}
           defaultValue={selectedEmployee}
@@ -84,7 +83,10 @@ export function App() {
         />
         <div className="RampBreak--l" />
         <div className="RampGrid">
-          <Transactions transactions={transactions} />
+          <Transactions
+            transactions={transactions}
+            transactionsLoading={transactionsByEmployeeUtils.loading}
+          />
 
           {canViewMore && (
             <button
