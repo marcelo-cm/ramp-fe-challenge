@@ -29,4 +29,4 @@ In this case, viewing more should not be an option when there is no next page.
 
 # Bug 7: Approving a transaction won't persist the new value
 
-We don't want to fetch with cache if the data is updated.
+Clear cache on both results endpoint if there is a transaction approved
