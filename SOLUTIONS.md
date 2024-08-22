@@ -22,3 +22,7 @@ The response object of the hook returns the new data appended to the existing da
 # Bug 5: Employees filter not available during loading more data
 
 Use the `loading` property of `employeeUtils` to denote the loading state of that particular dropdown.
+
+# Bug 6: View more button not working as expected
+
+Fixed during Bug 4
