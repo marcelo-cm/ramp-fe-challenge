@@ -19,6 +19,11 @@ export function App() {
     [paginatedTransactions, transactionsByEmployee]
   )
 
+  const canViewMore = useMemo(
+    () => transactions !== null && paginatedTransactions?.nextPage !== null,
+    [paginatedTransactions?.nextPage, transactions]
+  )
+
   const loadAllTransactions = useCallback(async () => {
     setIsLoading(true)
     transactionsByEmployeeUtils.invalidateData()
@@ -79,7 +84,7 @@ export function App() {
         <div className="RampGrid">
           <Transactions transactions={transactions} />
 
-          {transactions !== null && (
+          {canViewMore && (
             <button
               className="RampButton"
               disabled={paginatedTransactionsUtils.loading}

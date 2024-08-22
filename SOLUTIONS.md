@@ -14,3 +14,7 @@ The former allows for better testing.
 # Bug 3: Cannot select _All Employees_ after selecting an employee
 
 We handle a case where the new value has the same `ID` as our `EMPTY_EMPLOYEE` – in this case, we load all transactions.
+
+# Bug 4: Clicking on View More button not showing correct data
+
+The response object of the hook returns the new data appended to the existing data, instead of just the new data. During this I also uncovered a bug where users are able to continue viewing more despite there not being another page of data. In this case, viewing more should not be an option.
