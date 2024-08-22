@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo } from "react"
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react"
 import { InputSelect } from "./components/InputSelect"
 import { Instructions } from "./components/Instructions"
 import { Transactions } from "./components/Transactions"
@@ -9,6 +9,7 @@ import { EMPTY_EMPLOYEE } from "./utils/constants"
 import { Employee } from "./utils/types"
 
 export function App() {
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee>(EMPTY_EMPLOYEE)
   const { data: employees, ...employeeUtils } = useEmployees()
   const { data: paginatedTransactions, ...paginatedTransactionsUtils } = usePaginatedTransactions()
   const { data: transactionsByEmployee, ...transactionsByEmployeeUtils } = useTransactionsByEmployee()
@@ -18,9 +19,15 @@ export function App() {
     [paginatedTransactions, transactionsByEmployee]
   )
 
+  /**
+   * If there are more transactions to load and no employee is selected (because we don't paginate when filtering by employee),
+   */
   const canViewMore = useMemo(
-    () => transactions !== null && paginatedTransactions?.nextPage !== null,
-    [paginatedTransactions?.nextPage, transactions]
+    () =>
+      transactions !== null &&
+      paginatedTransactions?.nextPage !== null &&
+      selectedEmployee === EMPTY_EMPLOYEE,
+    [paginatedTransactions?.nextPage, selectedEmployee, transactions]
   )
 
   const loadAllTransactions = useCallback(async () => {
@@ -48,12 +55,11 @@ export function App() {
     <Fragment>
       <main className="MainContainer">
         <Instructions />
-
         <hr className="RampBreak--l" />
-
+        {paginatedTransactions?.data.length} |{transactionsByEmployee?.length}
         <InputSelect<Employee>
           isLoading={employeeUtils.loading}
-          defaultValue={EMPTY_EMPLOYEE}
+          defaultValue={selectedEmployee}
           items={employees === null ? [] : [EMPTY_EMPLOYEE, ...employees]}
           label="Filter by employee"
           loadingLabel="Loading employees"
@@ -66,6 +72,8 @@ export function App() {
               return
             }
 
+            setSelectedEmployee(newValue)
+
             if (newValue.id === EMPTY_EMPLOYEE.id) {
               await loadAllTransactions()
               return
@@ -74,9 +82,7 @@ export function App() {
             await loadTransactionsByEmployee(newValue.id)
           }}
         />
-
         <div className="RampBreak--l" />
-
         <div className="RampGrid">
           <Transactions transactions={transactions} />
 
