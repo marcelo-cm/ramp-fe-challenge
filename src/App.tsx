@@ -56,7 +56,7 @@ export function App() {
       <main className="MainContainer">
         <Instructions />
         <hr className="RampBreak--l" />
-        {paginatedTransactions?.data.length} |{transactionsByEmployee?.length}
+
         <InputSelect<Employee>
           isLoading={employeeUtils.loading}
           defaultValue={selectedEmployee}
