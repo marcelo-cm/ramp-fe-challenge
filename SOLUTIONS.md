@@ -26,3 +26,7 @@ Use the `loading` property of `employeeUtils` to denote the loading state of tha
 # Bug 6: View more button not working as expected
 
 In this case, viewing more should not be an option when there is no next page.
+
+# Bug 7: Approving a transaction won't persist the new value
+
+We don't want to fetch with cache if the data is updated.
